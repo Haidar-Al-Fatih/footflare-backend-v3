@@ -19,6 +19,37 @@ class Product extends Model
         'description'
     ];
 
+    public function getThumbnailUrlFullAttribute()
+    {
+        $value = $this->attributes['thumbnail_url'] ?? null;
+
+        if (!$value) {
+            return null;
+        }
+
+        if (preg_match('/^(https?:\/\/|data:)/', $value)) {
+            return $value;
+        }
+
+        if (file_exists(public_path($value))) {
+            return asset($value);
+        }
+
+        if (file_exists(public_path('storage/' . ltrim($value, '/')))) {
+            return asset('storage/' . ltrim($value, '/'));
+        }
+
+        if (file_exists(public_path('storage/products/' . ltrim($value, '/')))) {
+            return asset('storage/products/' . ltrim($value, '/'));
+        }
+
+        if (strpos($value, 'assets/') === 0) {
+            return asset($value);
+        }
+
+        return asset('storage/' . ltrim($value, '/'));
+    }
+
     /**
      * Relasi ke tabel Brand (Satu produk memiliki satu Brand)
      */

@@ -46,8 +46,8 @@
                         @forelse($products as $product)
                             <tr>
                                 <td class="ps-4">
-                                    @if($product->thumbnail_url)
-                                        <img src="{{ asset('storage/' . $product->thumbnail_url) }}" 
+                                    @if($product->thumbnail_url_full)
+                                        <img src="{{ $product->thumbnail_url_full }}" 
                                              alt="{{ $product->name }}" 
                                              class="rounded border"
                                              style="width: 60px; height: 60px; object-fit: contain; background-color: #f8f9fa;">
